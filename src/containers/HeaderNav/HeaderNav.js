@@ -3,14 +3,22 @@ import {Form, Icon, Image, Input, Menu} from 'semantic-ui-react';
 import './HeaderNav.scss';
 import logo from '../../assets/images/logo.jpg';
 import {Link, withRouter} from 'react-router-dom';
+import { getwishlists } from '../../store/reducers/addwishlist';
+import {connect} from 'react-redux';
 
 export class HeaderNav extends React.Component {
+  
   constructor(props) {
+    
     super(props);
+    
     this.state = {
       query: '',
+      
     };
+    console.log("videos",props)
   }
+  
   render() {
     return (
       // 1
@@ -36,6 +44,13 @@ export class HeaderNav extends React.Component {
           </Menu.Item>
           {/* 5 */}
           <Menu.Menu position='right'>
+          <Menu.Item>
+            <Link to="wishlist">
+            <Icon className='header-icon' name='th list' size='large'/>
+            <h5 className='w-number'>{this.props.videos}</h5>
+            </Link>
+              
+            </Menu.Item>
             <Menu.Item>
               {/* 6 */}
               <Icon className='header-icon' name='video camera' size='large'/>
@@ -70,4 +85,16 @@ export class HeaderNav extends React.Component {
   };
 }
 
-export default withRouter(HeaderNav);
+  function mapStateToProps(state) {
+    return {
+      videos: state.wishlists.wishlists.length,
+      
+     
+    };
+  }
+
+
+
+
+// export default withRouter(HeaderNav);
+export default connect(mapStateToProps,null)(HeaderNav)

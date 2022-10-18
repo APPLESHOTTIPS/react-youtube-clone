@@ -7,13 +7,15 @@ const initialState = {
 export default function(state = initialState,action){
     switch (action.type) {
         case WISHLIST:
+            
             state.wishlists.push(action.payload); 
             
-            return state
-            
+            return {...state}
     
         default:
-            return state
+            return {...state}
     }
 }
+
+export const getwishlists = (state) => state.wishlists.wishlists.length
 

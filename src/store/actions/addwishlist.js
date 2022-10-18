@@ -1,7 +1,7 @@
 export const WISHLIST="WISHLIST"
 
 
-export function AddWishList(payload){
+export function addWishList(payload){
    
     return {
         type:'WISHLIST',

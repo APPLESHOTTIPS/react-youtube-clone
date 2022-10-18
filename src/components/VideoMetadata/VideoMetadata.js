@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {Button, Divider, Icon} from "semantic-ui-react";
 import './VideoMetadata.scss';
 import {Rating} from '../Rating/Rating';
 import { useAlert } from "react-alert";  
 import { useDispatch } from 'react-redux';
-import { AddWishList } from '../../store/actions/addwishlist';
+import { addWishList } from '../../store/actions/addwishlist';
+import { useSelector } from 'react-redux';
+
 export function VideoMetadata(props) {
+  
+  const videos = useSelector((state) => state.wishlists.wishlists)||[]
 const dispatch=useDispatch();
   const alert = useAlert();
+  const [active,setactive]=useState(false)
+
+  useEffect(()=>{
+    for(let i=0;i<videos.length;i++){
+      if(videos[i].id===props.video.id){
+        setactive(true)
+        break;
+      }
+    }
+      },[])
   
+
+
   if (!props.video || !props.video.statistics) {
     return <div/>;
   }
+  
+
+  
 
   function handleadd(video) {
     // let videos = JSON.parse(localStorage.getItem("videos")) || [];
@@ -19,7 +38,7 @@ const dispatch=useDispatch();
     // videos.push(video);
     // localStorage.setItem("videos", JSON.stringify(videos));
     console.log(video)
-    dispatch(AddWishList(video))
+    dispatch(addWishList(video))
   }
 
 
@@ -39,10 +58,12 @@ const dispatch=useDispatch();
           </Button>
 
           <Button
+          disabled={active}
             basic
             icon
             labelPosition="left"
             onClick={() => {
+              setactive(true)
               alert.show("Video is added Successfully");
               handleadd(props.video);
             }}
