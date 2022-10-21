@@ -5,6 +5,8 @@ import logo from '../../assets/images/logo.jpg';
 import {Link, withRouter} from 'react-router-dom';
 import { getwishlists } from '../../store/reducers/addwishlist';
 import {connect} from 'react-redux';
+import { addWishList } from '../../store/actions/addwishlist';
+import { useDispatch } from 'react-redux';
 
 export class HeaderNav extends React.Component {
   
@@ -16,10 +18,14 @@ export class HeaderNav extends React.Component {
       query: '',
       
     };
-    console.log("videos",props)
+    
   }
+
+ 
   
   render() {
+    
+
     return (
       // 1
       <Menu borderless className='top-menu' fixed='top'>
@@ -73,6 +79,9 @@ export class HeaderNav extends React.Component {
       </Menu>
     );
   }
+  componentWillUnmount(){
+    this.props.showwishlist();
+  }
   onInputChange = (event) => {
     this.setState({
       query: event.target.value,
@@ -86,6 +95,7 @@ export class HeaderNav extends React.Component {
 }
 
   function mapStateToProps(state) {
+    
     return {
       videos: state.wishlists.wishlists.length,
       
@@ -93,8 +103,20 @@ export class HeaderNav extends React.Component {
     };
   }
 
+  const mapDispatchToProps=(dispatch)=>{
+    let videos=JSON.parse(localStorage.getItem("videos"))|[]
+    
+    if(videos){
+      return{
+      
+       showwishlist:()=> dispatch(addWishList(videos))
+      }
+    }
+   
+  }
+
 
 
 
 // export default withRouter(HeaderNav);
-export default connect(mapStateToProps,null)(HeaderNav)
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(HeaderNav))

@@ -10,7 +10,7 @@ import Trending from './containers/Trending/Trending';
 import Search from './containers/Search/Search';
 import WishList from "./containers/wishlist/wishlist";
 // const API_KEY = process.env.REACT_APP_YT_API_KEY;
-const API_KEY = "AIzaSyDi4NsHJrTmDU6uFd4lGHwxQ0t8k4DIBqI";
+const API_KEY = "AIzaSyDndTy3wPF_C7VWdBIm5WmEoObdijO_blU";
 class App extends Component {
   render() {
     return (

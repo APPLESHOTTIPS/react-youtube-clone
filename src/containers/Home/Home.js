@@ -7,6 +7,7 @@ import HomeContent from './HomeContent/HomeContent';
 import {bindActionCreators} from 'redux';
 import {getYoutubeLibraryLoaded} from '../../store/reducers/api';
 import {getVideoCategoryIds, videoCategoriesLoaded, videosByCategoryLoaded} from '../../store/reducers/videos';
+import { youtubeLibraryLoaded } from '../../store/actions/api';
 
 class Home extends React.Component {
   constructor(props) {
@@ -28,20 +29,29 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    console.log("fetching mostpopularVideos and VideosCategories 1 but not youtubeLibraryLoaded is false")
     if (this.props.youtubeLibraryLoaded) {
+     
       this.fetchCategoriesAndMostPopularVideos();
+      
     }
   }
 
   componentDidUpdate(prevProps) {
+   
     if (this.props.youtubeLibraryLoaded !== prevProps.youtubeLibraryLoaded) {
+      console.log("featching mostpopularVideos and VideosCategories 2")
       this.fetchCategoriesAndMostPopularVideos();
+      
     } else if (this.props.videoCategories !== prevProps.videoCategories) {
+      console.log("fetching videosbycetegories 2")
       this.fetchVideosByCategory();
+    
     }
   }
 
   fetchVideosByCategory() {
+    console.log("getting mostpopular videos by there cetegories with respect to category indexes")
     const categoryStartIndex = this.state.categoryIndex;
     const categories = this.props.videoCategories.slice(categoryStartIndex, categoryStartIndex + 3);
     this.props.fetchMostPopularVideosByCategory(categories);
@@ -53,11 +63,13 @@ class Home extends React.Component {
   }
 
   fetchCategoriesAndMostPopularVideos() {
+    console.log("getting mostpopularVideos and VideosCategories")
     this.props.fetchMostPopularVideos();
     this.props.fetchVideoCategories();
   }
 
   bottomReachedCallback = () => {
+   console.log("fecthing videosbycetegories 1")
     if (!this.props.videoCategoriesLoaded) {
       return;
     }

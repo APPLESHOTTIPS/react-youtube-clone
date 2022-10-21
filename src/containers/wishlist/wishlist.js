@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { VideoPreview } from "../../components/VideoPreview/VideoPreview";
 import {SideBar} from "../SideBar/SideBar"
-import { useSelector } from "react-redux";
-const WishList = () => {
-  
-  // let videos = JSON.parse(localStorage.getItem("videos")) || [];
+import { addWishList } from "../../store/actions/addwishlist";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
-  const videos = useSelector((state) => state.wishlists.wishlists)||[]
+const WishList = ({showwishlist,videos}) => {
+ 
+  useEffect(()=>{
+    let wishlistvideos=JSON.parse(localStorage.getItem("videos"))|[]
+
+    console.log("wishlistvideos",JSON.parse(localStorage.getItem("videos")))
+
+    if(wishlistvideos.length){
+      console.log(showwishlist)
+      showwishlist(wishlistvideos)
+    }
+  },[])
   
   return (
     <div>
@@ -33,4 +43,22 @@ const WishList = () => {
   );
 };
 
-export default WishList;
+function mapStateToProps(state) {
+    
+  return {
+    videos: state.wishlists.wishlists,
+    
+   
+  };
+}
+
+function mapDispatchToProps(dispatch){
+  console.log("dispatch",dispatch)
+  return{
+    showwishlist:(wishlist)=>dispatch(addWishList(wishlist))
+  }
+}
+
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WishList));

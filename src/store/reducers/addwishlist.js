@@ -8,9 +8,12 @@ export default function(state = initialState,action){
     switch (action.type) {
         case WISHLIST:
             
-            state.wishlists.push(action.payload); 
-            
-            return {...state}
+         console.log("action",action.payload)
+            let data=action.payload
+          
+            let wishlists=[...state.wishlists,data]
+            localStorage.setItem("videos",JSON.stringify(wishlists))
+            return {wishlists}
     
         default:
             return {...state}

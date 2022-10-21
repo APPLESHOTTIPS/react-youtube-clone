@@ -21,12 +21,14 @@ export class Watch extends React.Component {
   }
 
   componentDidMount() {
+    console.log("watch 1")
     if (this.props.youtubeLibraryLoaded) {
       this.fetchWatchContent();
     }
   }
 
   componentDidUpdate(prevProps) {
+    console.log("watch 2")
     if (this.props.youtubeLibraryLoaded !== prevProps.youtubeLibraryLoaded) {
       this.fetchWatchContent();
     }
