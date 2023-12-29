@@ -16,6 +16,9 @@ class WatchContent extends React.Component {
     if (!this.props.videoId) {
       return <div/>
     }
+    else{
+      console.log(this.props.video, 'of WatchContent.js')
+    }
     return (
       <InfiniteScroll bottomReachedCallback={this.props.bottomReachedCallback} showLoader={this.shouldShowLoader()}>
         <div className='watch-grid'>

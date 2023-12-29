@@ -8,7 +8,9 @@ export function VideoGrid(props) {
   if (!props.videos || !props.videos.length) {
     return <div/>;
   }
+  // console.log(props.videos)
   const gridItems = props.videos.map(video => {
+    // console.log(video)
     return (<VideoPreview video={video}
                           key={video.id}
                           pathname='/watch'

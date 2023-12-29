@@ -8,7 +8,15 @@ export function VideoMetadata(props) {
     return <div/>;
   }
   const viewCount = Number(props.video.statistics.viewCount).toLocaleString();
+  console.log(props.video, 'of video meta deta')
+  function addToWatchlater(){  
+      let counter = parseInt(localStorage.getItem('count'))+1;
+      var jsonString = JSON.stringify(props.video);
+      localStorage.setItem(counter, jsonString);
+      localStorage.setItem('count',counter)
+      alert('video is added to watchlater')
 
+  }
   return (
     <div className='video-metadata'>
       <h3>{props.video.snippet.title}</h3>
@@ -21,11 +29,11 @@ export function VideoMetadata(props) {
             <Icon name='share'/>
             Share
           </Button>
-          <Button basic icon>
+          <Button basic icon onClick={addToWatchlater}>
             <Icon name='add circle' />
           </Button>
           <Button basic icon>
-            <Icon name='ellipsis horizontal' />
+            <Icon name='ellipsis vertical' />
           </Button>
         </div>
       </div>
