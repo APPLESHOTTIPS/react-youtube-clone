@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {Button, Divider, Icon} from "semantic-ui-react";
 import './VideoMetadata.scss';
 import {Rating} from '../Rating/Rating';
 
 export function VideoMetadata(props) {
-  if (!props.video || !props.video.statistics) {
-    return <div/>;
-  }
+  const [added, isAdded] = useState(false)
+  
   const viewCount = Number(props.video.statistics.viewCount).toLocaleString();
   console.log(props.video, 'of video meta deta')
   const VideoPreviews = []
@@ -21,18 +20,30 @@ export function VideoMetadata(props) {
       videos.push(props.video)
       var jsonString = JSON.stringify(videos);
       localStorage.setItem('VideoPreviews', jsonString);
-      
-      alert('video is added to watchlater')
+      isAdded(true)
+      alert('no message')
   }
-  let partOfWatchlater = 0;
-  let extra = 0;
+  // let partOfWatchlater = 0;
+  // let extra = 0;
+  // let outputVideos = localStorage.getItem('VideoPreviews');
+  // let VideoPreviewsOutput = JSON.parse(outputVideos);
+  // if(VideoPreviewsOutput){
+  //   VideoPreviewsOutput.find((videos)=>(
+  //     videos.id==props.video.id ? partOfWatchlater = 1: extra = 0
+  //     ))
+  //     console.log(props.video.id, partOfWatchlater)
+  //   }
+    useEffect(()=>{
   let outputVideos = localStorage.getItem('VideoPreviews');
   let VideoPreviewsOutput = JSON.parse(outputVideos);
   if(VideoPreviewsOutput){
-    VideoPreviewsOutput.map((videos)=>(
-      videos.id==props.video.id ? partOfWatchlater = 1: extra = 0
+    VideoPreviewsOutput.find((videos)=>(
+      videos.id==props.video.id && isAdded(true)
       ))
-      console.log(props.video.id, partOfWatchlater)
+    }
+    },[])
+    if (!props.video || !props.video.statistics) {
+      return <div/>;
     }
   return (
     <div className='video-metadata'>
@@ -46,12 +57,13 @@ export function VideoMetadata(props) {
             <Icon name='share'/>
             Share
           </Button>
-          {partOfWatchlater ==0 ? <Button basic icon onClick={addToWatchlater}>
-            <Icon name='add circle' />
-          </Button> : <Button color="green">
+          { added? (<Button color="green">
     <Icon name="check" />
     Added to Watch later
-  </Button>}
+  </Button>) :
+          ( <Button basic icon onClick={addToWatchlater}>
+            <Icon name='add circle' />
+          </Button>)}
           <Button basic icon>
             <Icon name='ellipsis vertical' />
           </Button>
