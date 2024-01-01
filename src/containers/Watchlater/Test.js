@@ -1,90 +1,68 @@
-// import React from "react";
-// import {SideBar} from '../../containers/SideBar/SideBar';
-// export default function Test(){
-//     return(
-//         <>
-//         <React.Fragment>
-//         <SideBar/>
-//         <VideoGridHeader title='Watchlater' />
-//       </React.Fragment>
-//         </>
-//     )
-// }
-
-
-
-
-
-
-import React from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import * as videoActions from "../../store/actions/video";
-import {
-  allMostPopularVideosLoaded,
-  getMostPopularVideos,
-  getMostPopularVideosNextPageToken
-} from '../../store/reducers/videos';
-import {getYoutubeLibraryLoaded} from '../../store/reducers/api';
-import {VideoList} from '../../components/VideoList/VideoList';
-import {SideBar} from '../../containers/SideBar/SideBar';
+import React from "react";
+import { SideBar } from '../../containers/SideBar/SideBar';
 import VideoGridHeader from '../../components/VideoGrid/VideoGridHeader/VideoGridHeader'
+import { VideoPreview } from "../../components/VideoPreview/VideoPreview";
 
-class Trending extends React.Component {
-  componentDidMount() {
-    this.fetchTrendingVideos();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.youtubeLibraryLoaded !== this.props.youtubeLibraryLoaded) {
-      this.fetchTrendingVideos();
+export default function Test() {
+    console.log('hello this is watch later page')
+    const video =
+    {
+        "id": "UyFb45x_zgA",
+        "snippet": {
+            "publishedAt": "2023-12-27T19:03:33Z",
+            "channelId": "UC7McHNOsrUL2fRxTB_xvgRQ",
+            "title": "Tommy Smothers Walks Out As Johnny | Carson Tonight Show",
+            "thumbnails": {
+                "medium": {
+                    "url": "https://i.ytimg.com/vi/UyFb45x_zgA/mqdefault.jpg",
+                    "width": 320,
+                    "height": 180
+                }
+            },
+            "channelTitle": "Johnny Carson"
+        },
+        "contentDetails": {
+            "duration": "PT13M24S"
+        },
+        "statistics": {
+            "viewCount": "712836"
+        }
     }
-  }
-  
-  render() {
-    const loaderActive = this.shouldShowLoader();
 
+
+    // var storedData = localStorage.getItem('myData');
+    // var video = JSON.parse(storedData);
+
+    const VideoPreviews = []
+
+    var counter = parseInt(localStorage.getItem('count'))
+    console.log(counter, 'number of watch later videos')
+    if(counter==0){
+        VideoPreviews.push(<div></div>)
+    }
+    else{
+    let i = 1;
+    for (i = 1; i <= counter; i++) {
+        var storedData = localStorage.getItem(i);
+        var videos = JSON.parse(storedData);
+        VideoPreviews.push(
+            <VideoPreview horizontal={true} expanded={true} video={videos} key={videos.id} pathname={'/watch'}
+                        search={'?v=' + videos.id} />
+        )
+        console.log(videos, 'index position: ', i)
+        console.log(VideoPreviews, 'after pushing:', i, 'index')
+    }
+}
     return (
-    <>
-      <React.Fragment>
-        <SideBar/>
-        <VideoGridHeader title='Watchlater' />
-      </React.Fragment>
-      </>
-      );
-  }
-
-
-  fetchMoreVideos = () => {
-    const {nextPageToken} = this.props;
-    if (this.props.youtubeLibraryLoaded && nextPageToken) {
-      this.props.fetchMostPopularVideos(12, true, nextPageToken);
-    }
-  };
-
-  fetchTrendingVideos() {
-    if (this.props.youtubeLibraryLoaded) {
-      this.props.fetchMostPopularVideos(20, true);
-    }
-  }
-
-  shouldShowLoader() {
-    return !this.props.allMostPopularVideosLoaded;
-  }
+        <>
+            <SideBar />
+            <div className='home-content'>
+                <div className="responsive-video-grid-container">
+                    {/* <VideoPreview horizontal={true} expanded={true} video={videos} key={videos.id} pathname={'/watch'}
+                        search={'?v=' + videos.id} /> */}
+                    {VideoPreviews}
+                </div>
+            </div>
+        </>
+    )
 }
-
-function mapStateToProps(state) {
-  return {
-    videos: getMostPopularVideos(state),
-    youtubeLibraryLoaded: getYoutubeLibraryLoaded(state),
-    allMostPopularVideosLoaded: allMostPopularVideosLoaded(state),
-    nextPageToken: getMostPopularVideosNextPageToken(state),
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  const fetchMostPopularVideos = videoActions.mostPopular.request;
-  return bindActionCreators({fetchMostPopularVideos}, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Trending);

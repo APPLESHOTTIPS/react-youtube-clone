@@ -9,14 +9,31 @@ export function VideoMetadata(props) {
   }
   const viewCount = Number(props.video.statistics.viewCount).toLocaleString();
   console.log(props.video, 'of video meta deta')
+  const VideoPreviews = []
   function addToWatchlater(){  
-      let counter = parseInt(localStorage.getItem('count'))+1;
-      var jsonString = JSON.stringify(props.video);
-      localStorage.setItem(counter, jsonString);
-      localStorage.setItem('count',counter)
+    if(!localStorage.getItem('VideoPreviews')){
+      let VideoPreviewsstring = JSON.stringify(VideoPreviews)
+      localStorage.setItem('VideoPreviews', VideoPreviewsstring)
+      console.log('VideoPreviews', VideoPreviewsstring, VideoPreviews)
+    }
+      var storedData = localStorage.getItem('VideoPreviews');
+      var videos = JSON.parse(storedData);
+      videos.push(props.video)
+      var jsonString = JSON.stringify(videos);
+      localStorage.setItem('VideoPreviews', jsonString);
+      
       alert('video is added to watchlater')
-
   }
+  let partOfWatchlater = 0;
+  let extra = 0;
+  let outputVideos = localStorage.getItem('VideoPreviews');
+  let VideoPreviewsOutput = JSON.parse(outputVideos);
+  if(VideoPreviewsOutput){
+    VideoPreviewsOutput.map((videos)=>(
+      videos.id==props.video.id ? partOfWatchlater = 1: extra = 0
+      ))
+      console.log(props.video.id, partOfWatchlater)
+    }
   return (
     <div className='video-metadata'>
       <h3>{props.video.snippet.title}</h3>
@@ -29,9 +46,12 @@ export function VideoMetadata(props) {
             <Icon name='share'/>
             Share
           </Button>
-          <Button basic icon onClick={addToWatchlater}>
+          {partOfWatchlater ==0 ? <Button basic icon onClick={addToWatchlater}>
             <Icon name='add circle' />
-          </Button>
+          </Button> : <Button color="green">
+    <Icon name="check" />
+    Added to Watch later
+  </Button>}
           <Button basic icon>
             <Icon name='ellipsis vertical' />
           </Button>

@@ -33,26 +33,33 @@ export default function Test() {
     // var storedData = localStorage.getItem('myData');
     // var video = JSON.parse(storedData);
 
-    const VideoPreviews = []
+    // const VideoPreviews = []
 
-    var counter = parseInt(localStorage.getItem('count'))
-    console.log(counter, 'number of watch later videos')
-    if(counter==0){
-        VideoPreviews.push(<div></div>)
-    }
-    else{
-    let i = 1;
-    for (i = 1; i <= counter; i++) {
-        var storedData = localStorage.getItem(i);
-        var videos = JSON.parse(storedData);
-        VideoPreviews.push(
-            <VideoPreview horizontal={true} expanded={true} video={videos} key={videos.id} pathname={'/watch'}
-                        search={'?v=' + videos.id} />
-        )
-        console.log(videos, 'index position: ', i)
-        console.log(VideoPreviews, 'after pushing:', i, 'index')
-    }
-}
+    // var counter = parseInt(localStorage.getItem('count'))
+    // console.log(counter, 'number of watch later videos')
+//     if(counter==0){
+//         VideoPreviews.push(<div></div>)
+//     }
+//     else{
+//     let i = 1;
+//     for (i = 1; i <= counter; i++) {
+//         var storedData = localStorage.getItem(i);
+//         var videos = JSON.parse(storedData);
+//         VideoPreviews.push(
+            // <VideoPreview horizontal={true} expanded={true} video={videos} key={videos.id} pathname={'/watch'}
+            //             search={'?v=' + videos.id} />
+//         )
+//         console.log(videos, 'index position: ', i)
+//         console.log(VideoPreviews, 'after pushing:', i, 'index')
+//     }
+// }
+
+
+    let outputVideos = localStorage.getItem('VideoPreviews');
+    let VideoPreviews = JSON.parse(outputVideos);
+
+
+
     return (
         <>
             <SideBar />
@@ -60,7 +67,11 @@ export default function Test() {
                 <div className="responsive-video-grid-container">
                     {/* <VideoPreview horizontal={true} expanded={true} video={videos} key={videos.id} pathname={'/watch'}
                         search={'?v=' + videos.id} /> */}
-                    {VideoPreviews}
+                    {/* {VideoPreviews} */}
+                    {VideoPreviews?.map((videos)=>(
+                         <VideoPreview horizontal={true} expanded={true} video={videos} key={videos.id} pathname={'/watch'}
+                         search={'?v=' + videos.id} />
+                    ))}
                 </div>
             </div>
         </>
