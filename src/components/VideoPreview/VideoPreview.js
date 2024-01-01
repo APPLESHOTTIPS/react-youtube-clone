@@ -25,6 +25,14 @@ export class VideoPreview extends React.Component {
     const expanded = this.props.expanded ? 'expanded' : null;
     const description = this.props.expanded ? video.snippet.description : null;
 
+    function showContent(){
+      if(document.querySelector('.hidden-div').style.display == 'none')
+      document.querySelector('.hidden-div').style.display = 'block'
+    else
+    document.querySelector('.hidden-div').style.display = 'none'
+      
+    }
+
     return (
       <div className={['video-preview', horizontal, expanded].join(' ')}>
           <Link to={{pathname: this.props.pathname, search: this.props.search}}>
@@ -41,14 +49,25 @@ export class VideoPreview extends React.Component {
           </Link>
             <div className='video-preview-metadata-container'>            
               <div className='channel-title'>{video.snippet.channelTitle}
-              <Button basic icon>
-            <Icon name='ellipsis vertical' />
-            </Button>
-              </div>
-            <Link to={{pathname: this.props.pathname, search: this.props.search}}>
+              <Button basic icon className='iconRight' onClick={showContent}>
+                <Icon name='ellipsis vertical' />
+              </Button><br></br>
+            </div>
+              <Link to={{pathname: this.props.pathname, search: this.props.search}}>
               <div className='view-and-time'>{viewAndTimeString}</div>
               <div className='show-max-two-lines'>{description}</div>
             </Link>
+            <div class="hidden-div">
+            <p>Add to queue</p>
+            <p>Save to watch later</p>
+            <p>Save to playlist</p>
+            <p>Download</p>
+            <p>Share</p>
+            <p>Not interested</p>
+            <p>Dont recommend channel</p>
+            <p>Report</p>
+              </div>
+            
             </div>
           </div>
       
