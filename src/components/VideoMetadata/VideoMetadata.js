@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 export function VideoMetadata(props) {
   const [added, isAdded] = useState(false)
   
-  const viewCount = Number(props.video.statistics.viewCount).toLocaleString();
+  const viewCount = Number(props.video?.statistics.viewCount).toLocaleString();
   console.log(props.video, 'of video meta deta')
   // const VideoPreviews = []
   // function addToWatchlater(){  

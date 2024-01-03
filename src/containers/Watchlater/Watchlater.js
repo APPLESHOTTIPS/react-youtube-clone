@@ -71,10 +71,10 @@ export default function Test() {
                     {/* <VideoPreview horizontal={true} expanded={true} video={videos} key={videos.id} pathname={'/watch'}
                         search={'?v=' + videos.id} /> */}
                     {/* {VideoPreviews} */}
-                    {/* {VideoPreviews?.map((videos)=>(
+                    {VideoPreviews?.map((videos)=>(
                          <VideoPreview horizontal={true} expanded={true} video={videos} key={videos.id} pathname={'/watch'}
                          search={'?v=' + videos.id} />
-                    ))} */}
+                    ))}
                 </div>
             </div>
         </>

@@ -5,7 +5,7 @@ export const watchlater = (data = [], action) =>{
             console.log('added to watch later from reducer ', action.data)
             return [action.data, ...data];
         default :
-            return ''
+            return data
     }
     return "";
 }
