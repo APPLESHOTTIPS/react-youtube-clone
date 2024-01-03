@@ -2,6 +2,7 @@ import React from "react";
 import { SideBar } from '../../containers/SideBar/SideBar';
 import VideoGridHeader from '../../components/VideoGrid/VideoGridHeader/VideoGridHeader'
 import { VideoPreview } from "../../components/VideoPreview/VideoPreview";
+import { useSelector } from 'react-redux'
 
 export default function Test() {
     console.log('hello this is watch later page')
@@ -55,10 +56,12 @@ export default function Test() {
 // }
 
 
-    let outputVideos = localStorage.getItem('VideoPreviews');
-    let VideoPreviews = JSON.parse(outputVideos);
+    // let outputVideos = localStorage.getItem('VideoPreviews');
+    // let VideoPreviews = JSON.parse(outputVideos);
 
 
+    const VideoPreviews = useSelector((state)=>state.watchlater)
+    console.log('watchlater page', VideoPreviews)
 
     return (
         <>
@@ -68,10 +71,10 @@ export default function Test() {
                     {/* <VideoPreview horizontal={true} expanded={true} video={videos} key={videos.id} pathname={'/watch'}
                         search={'?v=' + videos.id} /> */}
                     {/* {VideoPreviews} */}
-                    {VideoPreviews?.map((videos)=>(
+                    {/* {VideoPreviews?.map((videos)=>(
                          <VideoPreview horizontal={true} expanded={true} video={videos} key={videos.id} pathname={'/watch'}
                          search={'?v=' + videos.id} />
-                    ))}
+                    ))} */}
                 </div>
             </div>
         </>

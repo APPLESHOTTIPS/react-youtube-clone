@@ -2,27 +2,29 @@ import React, { useEffect, useState } from 'react';
 import {Button, Divider, Icon} from "semantic-ui-react";
 import './VideoMetadata.scss';
 import {Rating} from '../Rating/Rating';
+import { watchlater } from '../../store/actions/Watchlater';
+import { useDispatch } from 'react-redux';
 
 export function VideoMetadata(props) {
   const [added, isAdded] = useState(false)
   
   const viewCount = Number(props.video.statistics.viewCount).toLocaleString();
   console.log(props.video, 'of video meta deta')
-  const VideoPreviews = []
-  function addToWatchlater(){  
-    if(!localStorage.getItem('VideoPreviews')){
-      let VideoPreviewsstring = JSON.stringify(VideoPreviews)
-      localStorage.setItem('VideoPreviews', VideoPreviewsstring)
-      console.log('VideoPreviews', VideoPreviewsstring, VideoPreviews)
-    }
-      var storedData = localStorage.getItem('VideoPreviews');
-      var videos = JSON.parse(storedData);
-      videos.push(props.video)
-      var jsonString = JSON.stringify(videos);
-      localStorage.setItem('VideoPreviews', jsonString);
-      isAdded(true)
-      alert('no message')
-  }
+  // const VideoPreviews = []
+  // function addToWatchlater(){  
+  //   if(!localStorage.getItem('VideoPreviews')){
+  //     let VideoPreviewsstring = JSON.stringify(VideoPreviews)
+  //     localStorage.setItem('VideoPreviews', VideoPreviewsstring)
+  //     console.log('VideoPreviews', VideoPreviewsstring, VideoPreviews)
+  //   }
+  //     var storedData = localStorage.getItem('VideoPreviews');
+  //     var videos = JSON.parse(storedData);
+  //     videos.push(props.video)
+  //     var jsonString = JSON.stringify(videos);
+  //     localStorage.setItem('VideoPreviews', jsonString);
+  //     isAdded(true)
+  //     alert('no message')
+  // }
   // let partOfWatchlater = 0;
   // let extra = 0;
   // let outputVideos = localStorage.getItem('VideoPreviews');
@@ -33,18 +35,29 @@ export function VideoMetadata(props) {
   //     ))
   //     console.log(props.video.id, partOfWatchlater)
   //   }
-    useEffect(()=>{
-  let outputVideos = localStorage.getItem('VideoPreviews');
-  let VideoPreviewsOutput = JSON.parse(outputVideos);
-  if(VideoPreviewsOutput){
-    VideoPreviewsOutput.find((videos)=>(
-      videos.id==props.video.id && isAdded(true)
-      ))
-    }
-    },[])
+  //   useEffect(()=>{
+  // let outputVideos = localStorage.getItem('VideoPreviews');
+  // let VideoPreviewsOutput = JSON.parse(outputVideos);
+  // if(VideoPreviewsOutput){
+  //   VideoPreviewsOutput.find((videos)=>(
+  //     videos.id==props.video.id && isAdded(true)
+  //     ))
+  //   }
+  //   },[])
+
+  const dispatch = useDispatch()
+  function addToWatchlater(){
+    dispatch(watchlater(props.video))
+    alert('video added to watchlater')
+  }
+
+
     if (!props.video || !props.video.statistics) {
       return <div/>;
     }
+
+    
+
   return (
     <div className='video-metadata'>
       <h3>{props.video.snippet.title}</h3>

@@ -9,7 +9,7 @@ import {getSearchParam} from '../../services/url';
 import {getChannelId} from '../../store/reducers/videos';
 import {getCommentNextPageToken} from '../../store/reducers/comments';
 import * as commentActions from '../../store/actions/comment';
-
+import {Video} from '../../components/Video/Video';
 
 export class Watch extends React.Component {
   render() {
