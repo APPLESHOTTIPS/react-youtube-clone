@@ -5,6 +5,7 @@ import channelsReducer from './channels';
 import commentsReducer from './comments';
 import searchReducer from './search';
 import later from './later'
+import like from './like'
 
 export default combineReducers({
   api: apiReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   channels: channelsReducer,
   comments: commentsReducer,
   search: searchReducer,
-  later: later
+  later: later,
+  like: like
 });

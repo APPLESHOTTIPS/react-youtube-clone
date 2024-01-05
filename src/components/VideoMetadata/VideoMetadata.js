@@ -4,6 +4,7 @@ import './VideoMetadata.scss';
 import {Rating} from '../Rating/Rating';
 import { useDispatch, useSelector } from 'react-redux';
 import { watchLaterAction } from '../../store/actions/later';
+import { likeVideo } from '../../store/actions/like';
 
 export function VideoMetadata(props) {
   const dispatch = useDispatch()
@@ -17,8 +18,8 @@ export function VideoMetadata(props) {
       <div className='video-stats'>
         <span>{viewCount} views</span>
         <div className='video-actions' >
-          <Rating likeCount={props.video.statistics.likeCount}
-                  dislikeCount={props.video.statistics.dislikeCount}/>
+          <Rating  likeCount={props.video.statistics.likeCount}
+                  dislikeCount={props.video.statistics.dislikeCount} video={props.video}/>
           <Button basic icon labelPosition='left'>
             <Icon name='share'/>
             Share

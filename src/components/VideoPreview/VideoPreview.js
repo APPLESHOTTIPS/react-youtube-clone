@@ -7,6 +7,7 @@ import en from 'javascript-time-ago/locale/en';
 import {getShortNumberString} from '../../services/number/number-format';
 import {getVideoDurationString} from '../../services/date/date-format';
 import {Link} from 'react-router-dom';
+import DropDown from './DropDown';
 
 TimeAgo.locale(en);
 const timeAgo = new TimeAgo('en-US');
@@ -26,6 +27,7 @@ export class VideoPreview extends React.Component {
     const description = this.props.expanded ? video.snippet.description : null;
 
     return (
+      <div class="wrapper">
       <Link to={{pathname: this.props.pathname, search: this.props.search}}>
         <div className={['video-preview', horizontal, expanded].join(' ')}>
           <div className='image-container'>
@@ -38,13 +40,20 @@ export class VideoPreview extends React.Component {
           <div className='video-info'>
             <div className={['semi-bold', 'show-max-two-lines', expanded].join(' ')}>{video.snippet.title}</div>
             <div className='video-preview-metadata-container'>
-              <div className='channel-title'>{video.snippet.channelTitle}</div>
-              <div className='view-and-time'>{viewAndTimeString}</div>
-              <div className='show-max-two-lines'>{description}</div>
+              <div className='wrapper'>
+                <div className='info-items'>
+                <div className='channel-title'>{video.snippet.channelTitle}</div>
+                <div className='view-and-time'>{viewAndTimeString}</div>
+                <div className='show-max-two-lines'>{description}</div>
+              </div>
+              </div>
             </div>
           </div>
         </div>
       </Link>
+              <DropDown video={this.props.video} url ={this.props.search}/>
+      {/* <DropDown/> */}
+      </div>
     );
   }
 

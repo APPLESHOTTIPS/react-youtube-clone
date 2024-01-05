@@ -1,5 +1,9 @@
 @import '../../styles/shared.scss';
 
+
+.wrapper{
+  // display: flex;
+}
 .video-preview {
   display: grid;
   grid: 180px auto / 320px;
@@ -33,6 +37,7 @@
   color: $text-color-dark;
 
   .video-preview-metadata-container {
+    display: flex;
     padding-top: 5px;
     font-size: 14px;
     color: #6e6e6e;

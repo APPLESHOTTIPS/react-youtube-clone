@@ -9,6 +9,7 @@ import {youtubeLibraryLoaded} from './store/actions/api';
 import Trending from './containers/Trending/Trending';
 import WatchLater from './containers/WatchLater/WatchLater'
 import Search from './containers/Search/Search';
+import LikedVideos from './containers/LikedVideos/LikedVideos';
 
 const API_KEY = "AIzaSyDQi4GUEUJG-qezrNYQz4DEBZKpClYtCQU";
 
@@ -21,6 +22,7 @@ class App extends Component {
           <Route path="/results" render={() => <Search key={this.props.location.key}/>}/>
           <Route path="/watchlater" component={WatchLater}/>
           <Route path="/watch" render={() => <Watch key={this.props.location.key}/>}/>
+          <Route path='/likedvideos' component={LikedVideos}/>
           <Route path="/" component={Home}/>
         </Switch>
       </AppLayout>

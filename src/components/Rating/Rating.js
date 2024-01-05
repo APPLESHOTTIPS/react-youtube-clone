@@ -2,11 +2,17 @@ import React from 'react';
 import './Rating.scss';
 import {Icon, Progress} from "semantic-ui-react";
 import {getShortNumberString} from '../../services/number/number-format';
+import { Dispatch } from 'react';
+import { useDispatch } from 'react-redux';
+import { likeVideo } from '../../store/actions/like';
 
 export function Rating(props) {
   let rating = null;
+  const dispatch = useDispatch()
   let likeCount = props.likeCount !== 0 ? props.likeCount : null;
   let dislikeCount = null;
+  console.log("rating")
+  console.log(props)
 
   if(props.likeCount && props.dislikeCount) {
     const amountLikes = parseFloat(props.likeCount);
@@ -21,7 +27,7 @@ export function Rating(props) {
   return (
     <div className='rating'>
       <div >
-        <Icon name='thumbs outline up'/>
+        <Icon onClick={()=>dispatch(likeVideo(props.video))} name='thumbs outline up'/>
         <span>{likeCount}</span>
       </div>
       <div >
