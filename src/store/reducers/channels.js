@@ -23,7 +23,7 @@ function reduceWatchDetails(responses, prevState) {
   if (channelResponse && channelResponse.result.items) {
     // we know that there will only be one item
     // because we ask for a channel with a specific id
-    const channel = channelResponse.result.items[0];
+    const channel = channelResponse.result.items;
     channels[channel.id] = channel;
   }
   return {
@@ -42,7 +42,7 @@ function reduceVideoDetails(responses, prevState) {
     // we're explicitly asking for a channel with a particular id
     // so the response set must either contain 0 items (if a channel with the specified id does not exist)
     // or at most one item (i.e. the channel we've been asking for)
-    const channel = channelResponse.result.items[0];
+    const channel = channelResponse.result.items;
     channelEntry =  {
       [channel.id]: channel,
     }

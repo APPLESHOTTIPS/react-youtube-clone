@@ -8,9 +8,9 @@ import {connect} from 'react-redux';
 import {youtubeLibraryLoaded} from './store/actions/api';
 import Trending from './containers/Trending/Trending';
 import Search from './containers/Search/Search';
-
-const API_KEY = process.env.REACT_APP_YT_API_KEY;
-
+import WishList from "./containers/wishlist/wishlist";
+// const API_KEY = process.env.REACT_APP_YT_API_KEY;
+const API_KEY = "AIzaSyDniy_eSspz5hUjxXDy5PVa2ELINvOuV7w";
 class App extends Component {
   render() {
     return (
@@ -19,8 +19,9 @@ class App extends Component {
           <Route path="/feed/trending" component={Trending}/>
           <Route path="/results" render={() => <Search key={this.props.location.key}/>}/>
           <Route path="/watch" render={() => <Watch key={this.props.location.key}/>}/>
+          <Route path="/watchlist" component={WishList}/>
           <Route path="/" component={Home}/>
-        </Switch>
+          </Switch>
       </AppLayout>
     );
   }

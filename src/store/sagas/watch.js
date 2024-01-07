@@ -10,6 +10,7 @@ import {REQUEST} from '../actions';
 import {SEARCH_LIST_RESPONSE, VIDEO_LIST_RESPONSE} from '../api/youtube-api-response-types';
 
 export function* fetchWatchDetails(videoId, channelId) {
+  console.log("arv09",videoId, channelId)
   let requests = [
     buildVideoDetailRequest.bind(null, videoId),
     buildRelatedVideosRequest.bind(null, videoId),
@@ -22,6 +23,7 @@ export function* fetchWatchDetails(videoId, channelId) {
 
   try {
     const responses = yield all(requests.map(fn => call(fn)));
+    console.log("arv1",responses)
     yield put(watchActions.details.success(responses, videoId));
     yield call (fetchVideoDetails, responses, channelId === null);
   } catch (error) {

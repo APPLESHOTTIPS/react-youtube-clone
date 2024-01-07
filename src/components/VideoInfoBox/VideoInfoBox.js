@@ -23,6 +23,7 @@ export class VideoInfoBox extends React.Component {
     const publishedAtString = getPublishedAtDateString(this.props.video.snippet.publishedAt);
 
     const {channel} = this.props;
+    console.log("YOUTUBE".this.props);
     const buttonText = this.getSubscriberButtonText();
     const channelThumbnail = channel.snippet.thumbnails.medium.url;
     const channelTitle = channel.snippet.title;
@@ -35,7 +36,7 @@ export class VideoInfoBox extends React.Component {
             <div className='channel-name'>{channelTitle}</div>
             <div className='video-publication-date'>{publishedAtString}</div>
           </div>
-          <Button className='subscribe' color='youtube'>{buttonText}</Button>
+          <Button className='subscribe' color='youtube'> {buttonText}</Button>
           <div className="video-description">
             <div className={descriptionTextClass}>
               {descriptionParagraphs}

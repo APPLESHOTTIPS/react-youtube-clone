@@ -15,14 +15,19 @@ export const initialState = {
 export default function videos(state = initialState, action) {
   switch (action.type) {
     case MOST_POPULAR[SUCCESS]:
+      console.log("arv123")
       return reduceFetchMostPopularVideos(action.response, state);
     case VIDEO_CATEGORIES[SUCCESS]:
+      console.log("arv1234")
       return reduceFetchVideoCategories(action.response, state);
     case MOST_POPULAR_BY_CATEGORY[SUCCESS]:
+      console.log("arv12345")
       return reduceFetchMostPopularVideosByCategory(action.response, action.categories, state);
     case WATCH_DETAILS[SUCCESS]:
+      console.log("arv123456")
       return reduceWatchDetails(action.response, state);
     case VIDEO_DETAILS[SUCCESS]:
+      console.log("arv1234567")
       return reduceVideoDetails(action.response, state);
     default:
       return state;
@@ -30,6 +35,7 @@ export default function videos(state = initialState, action) {
 }
 
 function reduceFetchMostPopularVideos(response, prevState) {
+  console.log("arv0987",response)
   const videoMap = response.items.reduce((accumulator, video) => {
     accumulator[video.id] = video;
     return accumulator;
@@ -54,6 +60,7 @@ function reduceFetchMostPopularVideos(response, prevState) {
 }
 
 function reduceFetchVideoCategories(response, prevState) {
+  console.log("arv09876",response)
   const categoryMapping = response.items.reduce((accumulator, category) => {
     accumulator[category.id] = category.snippet.title;
     return accumulator;
@@ -217,7 +224,7 @@ export const getVideosByCategory = createSelector(
       accumulator[categoryTitle] = videoIds.map(videoId => videosById[videoId]);
       return accumulator;
     }, {});
-  }
+}
 );
 
 export const videoCategoriesLoaded = createSelector(
@@ -235,6 +242,7 @@ export const videosByCategoryLoaded = createSelector(
 );
 
 export const getVideoById = (state, videoId) => {
+  console.log('getVideoById',state)
   return state.videos.byId[videoId];
 };
 const getRelatedVideoIds = (state, videoId) => {
@@ -261,6 +269,15 @@ export const getChannelId = (state, location, name) => {
   return null;
 };
 
+export const getViewCounts = createSelector(
+  getVideoById,
+  (video) => {
+    if (video) {
+      return video.statistics.viewCount;
+    }
+    return 0;
+  });
+
 export const getAmountComments = createSelector(
   getVideoById,
   (video) => {
@@ -269,6 +286,7 @@ export const getAmountComments = createSelector(
     }
     return 0;
   });
+  
 
 export const allMostPopularVideosLoaded = createSelector(
   [getMostPopular],

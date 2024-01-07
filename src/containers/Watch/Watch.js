@@ -29,11 +29,25 @@ export class Watch extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.youtubeLibraryLoaded !== prevProps.youtubeLibraryLoaded) {
       this.fetchWatchContent();
+      // this.fetchCategoriesAndMostPopularVideos();
     }
   }
 
+  // fetchCategoriesAndMostPopularVideos() {
+  //   console.log("getting mostpopularVideos and VideosCategories")
+  //   this.props.fetchMostPopularVideos();
+  //   this.props.fetchVideoCategories();
+  // }
+
   getVideoId() {
     return getSearchParam(this.props.location, 'v');
+  }
+
+  componentDidMount() {
+    
+    const { location } = this.props;
+    if((location !== null || location !== undefined) && location)
+    localStorage.setItem('lastLocation', JSON.stringify(location));
   }
 
   fetchWatchContent() {
@@ -41,6 +55,8 @@ export class Watch extends React.Component {
     if (!videoId) {
       this.props.history.push('/');
     }
+    const lastId =localStorage.getItem("lastLocation")
+    console.log("arv101",lastId)
     this.props.fetchWatchDetails(videoId, this.props.channelId);
   }
 
@@ -53,7 +69,8 @@ export class Watch extends React.Component {
 
 function mapStateToProps(state, props) {
   return {
-    youtubeLibraryLoaded: getYoutubeLibraryLoaded(state),
+    ...state,
+    youtubeLibraryLoaded: getYoutubeLibraryLoaded(state,props),
     channelId: getChannelId(state, props.location, 'v'),
     nextPageToken: getCommentNextPageToken(state, props.location),
   };

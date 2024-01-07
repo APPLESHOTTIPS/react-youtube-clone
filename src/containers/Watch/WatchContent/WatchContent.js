@@ -12,10 +12,20 @@ import {getCommentsForVideo} from '../../../store/reducers/comments';
 import {InfiniteScroll} from '../../../components/InfiniteScroll/InfiniteScroll';
 
 class WatchContent extends React.Component {
+  componentDidMount() {
+    // Assuming some action to fetch initial data based on videoId
+    if (this.props.videoId && !this.props.video) {
+      // this.props.dispatch(fetchVideoData(this.props.videoId));
+    }
+  }
   render() {
+   
     if (!this.props.videoId) {
       return <div/>
     }
+
+    console.log('propsDataARVIND',this.props.video)
+   
     return (
       <InfiniteScroll bottomReachedCallback={this.props.bottomReachedCallback} showLoader={this.shouldShowLoader()}>
         <div className='watch-grid'>
@@ -34,6 +44,7 @@ class WatchContent extends React.Component {
 }
 
 function mapStateToProps(state, props) {
+  console.log('currentSate',state,props)
   return {
     relatedVideos: getRelatedVideos(state, props.videoId),
     video: getVideoById(state, props.videoId),

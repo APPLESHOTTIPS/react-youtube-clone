@@ -16,7 +16,7 @@ export class SideBar extends React.Component {
         <Divider/>
         <SideBarHeader title='Library'/>
         <SideBarItem label='History' icon='history'/>
-        <SideBarItem label='Watch later' icon='clock'/>
+        <SideBarItem path="/watchlist" label='Watch later' icon='clock'/>
         <SideBarItem label='Liked videos' icon='thumbs up'/>
         <Divider/>
         <Subscriptions/>
